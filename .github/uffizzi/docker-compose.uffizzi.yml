@@ -6,7 +6,7 @@ x-uffizzi:
     port: 8080
 
 services:
-  root_db:
+  postgres:
     image: postgres
     restart: always
     environment:
