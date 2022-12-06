@@ -8,6 +8,12 @@ on:
       - completed
 
 jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump context
+        uses: crazy-max/ghaction-dump-context@v1
+
   cache-compose-file:
     name: Cache Compose File
     runs-on: ubuntu-latest
