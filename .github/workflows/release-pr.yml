@@ -27,7 +27,7 @@ jobs:
 
   # enrich tag for pr release
   set-tag:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action != 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     runs-on: 'ubuntu-latest'
     steps:
       - name: set-tag
@@ -54,7 +54,7 @@ jobs:
 
   # Build, install, publish frontend and backend to npm
   release-npm:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action != 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     needs: [set-tag]
     uses: ./.github/workflows/release-npm.yml
     with:
@@ -65,7 +65,7 @@ jobs:
 
   # Build docker image and push to docker hub
   release-docker:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action != 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     needs: [release-npm, set-tag]
     uses: ./.github/workflows/release-docker.yml
     with:
@@ -79,7 +79,7 @@ jobs:
 
   # Build executables and publish to GitHub
   release-executables:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action != 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     needs: [set-tag, release-npm]
     uses: ./.github/workflows/release-timely-executables.yml
     with:
@@ -89,7 +89,7 @@ jobs:
 
   # Add a comment for PR docker build
   leave-comment:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action != 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     runs-on: 'ubuntu-latest'
     needs: [release-docker, set-tag]
     steps:
@@ -104,7 +104,7 @@ jobs:
   # Create a preview for the pull request
   preview-pull-request:
     name: "Trigger Uffizzi Preview"
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action != 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     runs-on: 'ubuntu-latest'
     needs: [release-docker, set-tag]
     outputs:
@@ -139,7 +139,7 @@ jobs:
     
   # Add a comment for PR executable build
   leave-executable-comment:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action != 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     runs-on: 'ubuntu-latest'
     needs: [release-executables, set-tag]
     steps:
@@ -177,7 +177,7 @@ jobs:
   delete-uffizzi-preview:
     name: Call for Preview Deletion
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false && github.base_ref == 'develop' && github.event.action == 'closed' }}
+    if: ${{ 'foo' == 'bar' }}
     steps:
       # If this PR is closing, we will not render a compose file nor pass it to the next workflow.
       - name: Serialize PR Event to File
